@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+#comment this out 
+import urllib
+from urllib import request
+import re
+target_page="https://www.gutenberg.org/wiki/African_American_Writers_(Bookshelf)"
+resp = urllib.request.urlopen(target_page)
+respData = resp.read()
+string_data=str(respData)
+numbers = re.findall(r"ebook:\d+", string_data)
+titles = re.findall(r"\"ebook:\d+\">.*?<", string_data)
+for number in numbers:
+    number2=number[6:]
+    url="http://www.gutenberg.org/cache/epub/{}/pg{}.txt".format(number2,number2)
+    resp2=urllib.request.urlopen(url)
+    respData2=resp2.read()
+    respData3=str(respData2)
+    for title in titles:
+        name=title[6:-1]+'.txt'
+        doc = open(name, 'w+')
+        doc.write(respData3)
