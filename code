@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# make sure your working directory is the Desktop, so os
+path = "c:\Users\Lib-Checkout\Desktop"
+#try this
+path = r"c:\Users\Lib-Checkout\Desktop"
 #comment this out 
 import urllib
 from urllib import request
@@ -15,7 +19,6 @@ for number in numbers:
     resp2=urllib.request.urlopen(url)
     respData2=resp2.read()
     respData3=str(respData2)
-    for title in titles:
-        name=title[6:-1]+'.txt'
-        doc = open(name, 'w+')
-        doc.write(respData3)
+    name=number+'.txt'
+    doc = open(name, 'w+')
+    doc.write(respData3)
