@@ -19,6 +19,8 @@ for number in numbers:
     resp2=urllib.request.urlopen(url)
     respData2=resp2.read()
     respData3=str(respData2)
-    name=number+'.txt'
+    name=r"c:\Users\Lib-Checkout\Desktop\{}.txt".format(number2)
     doc = open(name, 'w+')
     doc.write(respData3)
+    
+   #still need to do an else if 
