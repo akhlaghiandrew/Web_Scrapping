@@ -14,13 +14,15 @@ string_data=str(respData)
 numbers = re.findall(r"ebook:\d+", string_data)
 titles = re.findall(r"\"ebook:\d+\">.*?<", string_data)
 for number in numbers:
-    number2=number[6:]
-    url="http://www.gutenberg.org/cache/epub/{}/pg{}.txt".format(number2,number2)
-    resp2=urllib.request.urlopen(url)
-    respData2=resp2.read()
-    respData3=str(respData2)
-    name=r"c:\Users\Lib-Checkout\Desktop\{}.txt".format(number2)
-    doc = open(name, 'w+')
-    doc.write(respData3)
-    
+    try:
+        number2=number[6:]
+        url="http://www.gutenberg.org/cache/epub/{}/pg{}.txt".format(number2,number2)
+        resp2=urllib.request.urlopen(url)
+        respData2=resp2.read()
+        respData3=str(respData2)
+        name=r"c:\Users\Lib-Checkout\Desktop\{}.txt".format(number2)
+        doc = open(name, 'w+')
+        doc.write(respData3)
+    except:
+        pass
    #still need to do an else if 
