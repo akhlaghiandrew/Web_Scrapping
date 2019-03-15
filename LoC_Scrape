@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import urllib
+from urllib import request
+import re
+import os
+list_num=['010','021','022','023','024','025','026','027','030','041','042','043','044','050','060','070','080','090','100','111','120','130','141','142','143','144','150','161','162','163','164','171']
+pages=349
+url_text='https://www.loc.gov/resource/mesn.043/?sp=1&st=text'
+
+for number in list_num:
+    pages=349
+    file_name=number+'.txt'
+    file_all=open(file_name,'w+')
+    try:
+        url_text='https://www.loc.gov/resource/mesn.{}/?sp={}&st=text'.format(number,pages)
+        resp2=urllib.request.urlopen(url_text)
+        respData2=resp2.read()
+        respData3=str(respData2)
+        narrative=re.findall(r"<br/).*",respData3)
+        file_all.write(respData3)
+    except:
+        pass
+        
