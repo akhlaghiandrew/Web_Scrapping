@@ -1,23 +1,38 @@
 #!/usr/bin/env python3
-import urllib
-from urllib import request
+from urllib.request import Request, urlopen
+import re
+import urllib.request
+import random
 import re
 import os
-list_num=['010','021','022','023','024','025','026','027','030','041','042','043','044','050','060','070','080','090','100','111','120','130','141','142','143','144','150','161','162','163','164','171']
-pages=349
-url_text='https://www.loc.gov/resource/mesn.043/?sp=1&st=text'
+import time
 
-for number in list_num:
-    pages=349
-    file_name=number+'.txt'
-    file_all=open(file_name,'w+')
-    try:
-        url_text='https://www.loc.gov/resource/mesn.{}/?sp={}&st=text'.format(number,pages)
-        resp2=urllib.request.urlopen(url_text)
-        respData2=resp2.read()
-        respData3=str(respData2)
-        narrative=re.findall(r"<br/).*",respData3)
-        file_all.write(respData3)
-    except:
-        pass
+list_urls=[]
+list_pages=[]
+for i in range(30):
+    url_page='https://www.loc.gov/collections/japanese-american-internment-camp-newspapers/?c=160&sp={}'.format(i)
+    req = Request(url_page, headers={'User-Agent': 'Mozilla/5.0'})
+	webpage = urlopen(req).read()
+    web_words=str(webpage)
+	list_tiffs=re.search(r"http\:\/\/www.loc.gov\/item\/sn\d+\/\d+\-\d+\-\d+\/ed\-1\/", web_words)
+	non_duplicate_url=set(list_tiffs)
+	list_urls.append(non_duplicate_url)
+	rando=random.randint(30,45)
+	time.sleep(rando)
+
+for url in list_urls:
+    url2=url+"?sp=&st=text"
+    for page in list_pages:
         
+    
+    req = Request(url2, headers={'User-Agent': 'Mozilla/5.0'})
+    webpage = urlopen(req).read()
+    html_page=str(webpage)
+    narrative=re.findall(r"<br/>.*</div>", html_page)
+    file_all.write(respData3)
+    rando=random.randint(30,45)
+	time.sleep(rando)
+
+
+words_url=str(list_urls)
+f=open('test_url.txt','w+')
