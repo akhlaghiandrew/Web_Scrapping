@@ -8,31 +8,31 @@ import os
 import time
 
 list_urls=[]
-list_pages=[]
-for i in range(30):
-    url_page='https://www.loc.gov/collections/japanese-american-internment-camp-newspapers/?c=160&sp={}'.format(i)
-    req = Request(url_page, headers={'User-Agent': 'Mozilla/5.0'})
-	webpage = urlopen(req).read()
-    web_words=str(webpage)
-	list_tiffs=re.search(r"http\:\/\/www.loc.gov\/item\/sn\d+\/\d+\-\d+\-\d+\/ed\-1\/", web_words)
-	non_duplicate_url=set(list_tiffs)
-	list_urls.append(non_duplicate_url)
-	rando=random.randint(30,45)
-	time.sleep(rando)
+for i in range(31):
+url_page='https://www.loc.gov/collections/japanese-american-internment-camp-newspapers/?c=160&sp={}'.format(i)
+req = Request(url_page, headers={'User-Agent': 'Mozilla/5.0'})
+webpage = urlopen(req).read()
+web_words=str(webpage)
+list_tiffs=re.findall(r"https\:\/\/www.loc.gov\/item\/sn\d+\/\d+\-\d+\-\d+\/ed\-\d", web_words)
+list_tiffs2=re.findall(r"https\:\/\/www.loc.gov\/item\/\d+\/\d+\-\d+\-\d+\/ed\-\d", web_words)
+list_tiff.extend(list_tiffs2)
 
-for url in list_urls:
-    url2=url+"?sp=&st=text"
-    for page in list_pages:
-        
-    
-    req = Request(url2, headers={'User-Agent': 'Mozilla/5.0'})
-    webpage = urlopen(req).read()
-    html_page=str(webpage)
-    narrative=re.findall(r"<br/>.*</div>", html_page)
-    file_all.write(respData3)
-    rando=random.randint(30,45)
-	time.sleep(rando)
-
-
-words_url=str(list_urls)
-f=open('test_url.txt','w+')
+for url in list_tiffs:
+    for i in range(2):
+        try1=url[25:]
+        url2="https://www.loc.gov/resource/"+try1+"/?sp={}&st=text".format(i)
+        req = Request(url2, headers={'User-Agent': 'Mozilla/5.0'})
+        webpage = urlopen(req).read()
+        except:
+            pass
+        else:
+            html_page=str(webpage)
+            soup = BeautifulSoup(html_page, 'html.parser')
+            text=soup.find_all(id="page-fulltext-item")
+            title=str(soup.title)
+            title_name=title[25:30]+'.txt'
+            f=open(title_name,'w+')
+            text2=str(text)
+            f.write(text)
+            rando=random.randint(30,45)
+            time.sleep(rando)
